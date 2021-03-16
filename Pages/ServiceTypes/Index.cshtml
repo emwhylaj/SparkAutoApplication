@@ -1,0 +1,31 @@
+﻿@page
+@model SparkAuto.Pages.ServiceType.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<br/>
+<div class="border white-background">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">Service Types List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a class="btn btn-primary"asp-page="Create"><i class="fas fa-plus"></i>&nbsp;  Create New</a>
+        </div>
+    </div>
+    <div>
+
+        @if (Model.ServiceTypes.Count() is 0)
+        {
+            <p class="text-danger">No Service Type Exists. Please Create New Service Type.</p>
+        }
+        else
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary"></tr>
+            </table>
+        }
+    </div>
+</div>
