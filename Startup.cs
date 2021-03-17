@@ -42,6 +42,7 @@ namespace SparkAuto
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseAuthorization();
             }
             else
             {
