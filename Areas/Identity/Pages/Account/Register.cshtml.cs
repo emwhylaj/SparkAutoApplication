@@ -75,6 +75,8 @@ namespace SparkAuto.Areas.Identity.Pages.Account
 
             [Required]
             public string PhoneNumber { get; set; }
+
+            public bool IsAdmin { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -109,6 +111,18 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                     if (!await _roleManager.RoleExistsAsync(SD.CustomerEndUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(SD.CustomerEndUser));
+                    }
+                    if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        if (Input.IsAdmin)
+                        {
+                            await _userManager.AddToRoleAsync(user, SD.AdminEndUser);
+                        }
+                        else
+                        {
+                            await _userManager.AddToRoleAsync(user, SD.CustomerEndUser);
+                        }
+                        return RedirectToPage("/Users/Index");
                     }
 
                     await _userManager.AddToRoleAsync(user, SD.CustomerEndUser);

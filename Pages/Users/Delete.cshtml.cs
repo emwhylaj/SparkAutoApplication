@@ -12,11 +12,11 @@ using SparkAuto.Utility;
 namespace SparkAuto.Pages.Users
 {
     [Authorize(Roles = SD.AdminEndUser)]
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext db;
 
-        public EditModel(ApplicationDbContext db)
+        public DeleteModel(ApplicationDbContext db)
         {
             this.db = db;
         }
@@ -32,19 +32,10 @@ namespace SparkAuto.Pages.Users
 
         public async Task<IActionResult> OnPost()
         {
-            if (ModelState.IsValid)
-            {
-                var user = await db.ApplicationUsers.FindAsync(ApplicationUser.Id);
-                user.Name = ApplicationUser.Name;
-                user.PhoneNumber = ApplicationUser.PhoneNumber;
-                user.PostalCode = ApplicationUser.PostalCode;
-                user.Address = ApplicationUser.Address;
-                user.City = ApplicationUser.City;
-
-                await db.SaveChangesAsync();
-                return RedirectToPage("Index");
-            }
-            return Page();
+            var user = await db.ApplicationUsers.FindAsync(ApplicationUser.Id);
+            db.ApplicationUsers.Remove(user);
+            await db.SaveChangesAsync();
+            return RedirectToPage("Index");
         }
     }
 }
